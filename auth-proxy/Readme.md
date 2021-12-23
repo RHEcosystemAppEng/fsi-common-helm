@@ -48,3 +48,7 @@ helm install $RELEASE_NAME ./
 	#e.g helm install kafdrop-auth-proxy ./ --namespace=redhat-auth-proxy-test
 	```
  
+---
+## for the future
+1. add support for ultiple authentication methods to the chart
+2. allow user to set a specific set of email addresses to be allowed to authenticate instead of email domain name
