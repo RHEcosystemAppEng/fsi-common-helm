@@ -1,7 +1,7 @@
-#RedHat auth proxy
+# RedHat auth proxy
 **RedHat auth proxy** is a proxy that can make use of openshift authentication solutions in order to enable/force users to authenticate for workloads that doesnt support authentication
 
-##Customizing Values file
+## Customizing Values file
 - clone the Chart folder
 - open and edit **values.yaml** file according to the following instructions:
 ---
@@ -32,7 +32,7 @@
     - 'someOtherLabelName: someOtherLabelValue'
 ```
 ---
-##Installation
+## Installation
 1. using the currently active project
 ```bash
 #supposing you are in the chart dir
