@@ -34,12 +34,12 @@
 ---
 ## Installation
 1. using the currently active project
-```bash
-#supposing you are in the chart dir
-#run:
-helm install $RELEASE_NAME ./
-#e.g helm install kafdrop-auth-proxy ./
-```
+	```bash
+	#supposing you are in the chart dir
+	#run:
+	helm install $RELEASE_NAME ./
+	#e.g helm install kafdrop-auth-proxy ./
+	```
 2. install in a diffrent project/namespace
 	```bash
 	#supposing you are in the chart dir
