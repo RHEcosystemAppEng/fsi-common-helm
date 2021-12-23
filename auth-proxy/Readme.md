@@ -47,4 +47,4 @@ helm install $RELEASE_NAME ./
 	helm install $RELEASE_NAME ./ --namespace=$my_namespace
 	#e.g helm install kafdrop-auth-proxy ./ --namespace=redhat-auth-proxy-test
 	```
-
+ 
