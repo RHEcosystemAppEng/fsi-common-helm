@@ -1,0 +1,110 @@
+kind: List
+apiVersion: v1
+items:
+# Create a proxy service account and ensure it will use the route "proxy"
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: {{ .Release.Name }}-proxy
+    namespace: {{ .Release.Namespace }}
+    annotations:
+      serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"{{ .Release.Name }}-proxy"}}'
+    labels:
+      {{- range $.Values.auth.labels }}
+        {{ . }}
+      {{- end }} 
+# Create a secure connection to the proxy via a route
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: {{ .Release.Name }}-proxy
+    namespace: {{ .Release.Namespace }}
+    labels:
+      {{- range $.Values.auth.labels }}
+        {{ . }}
+      {{- end }} 
+  spec:
+    to:
+      kind: Service
+      name: {{ .Release.Name }}-proxy
+    tls:
+      termination: Reencrypt
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: {{ .Release.Name }}-proxy
+    namespace: {{ .Release.Namespace }}
+    annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: {{ .Release.Name }}-proxy
+    labels:
+      {{- range $.Values.auth.labels }}
+        {{ . }}
+      {{- end }} 
+  spec:
+    ports:
+    - name: {{ .Release.Name }}-proxy
+      port: 443
+      targetPort: 8443
+    selector:
+      {{- range $.Values.auth.labels }}
+        {{ . }}
+      {{- end }} 
+- kind: Deployment
+  apiVersion: apps/v1
+  metadata:
+    name: {{ .Release.Name }}-proxy
+    namespace: {{ .Release.Namespace }}
+    labels:
+      {{- range $.Values.auth.labels }}
+        {{ . }}
+      {{- end }} 
+  spec:
+    replicas: {{ .Values.auth.replicase }}
+    selector:
+      matchLabels:
+        {{- range $.Values.auth.labels }}
+          {{ . }}
+        {{- end }}    
+    template:
+      metadata:
+        labels:
+          {{- range $.Values.auth.labels }}
+            {{ . }}
+          {{- end }} 
+      spec:
+        serviceAccountName: {{ .Release.Name }}-proxy
+        volumes:
+          - name: {{ .Release.Name }}-proxy
+            secret:
+              secretName: {{ .Release.Name }}-proxy
+        containers:
+          - name: oauth-proxy
+            image: openshift/oauth-proxy:latest
+            imagePullPolicy: IfNotPresent
+            ports:
+            - containerPort: 8443
+              name: public
+            args:
+            - --https-address=:8443
+            - --provider=openshift
+            - --openshift-service-account={{ .Release.Name }}-proxy
+            - --upstream={{ .Values.auth.upstream }}
+            - --tls-cert=/etc/tls/private/tls.crt
+            - --tls-key=/etc/tls/private/tls.key
+            - --cookie-secret={{ .Values.auth.cookieSecretName }}
+            - --cookie-refresh={{ .Values.auth.cookieRefreshSec }}s
+            - --email-domain={{ .Values.auth.emailDomain }}
+            volumeMounts:
+            - mountPath: /etc/tls/private
+              name: {{ .Release.Name }}-proxy
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        schedulerName: default-scheduler
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
+    revisionHistoryLimit: 10
+    progressDeadlineSeconds: 600

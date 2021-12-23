@@ -1,0 +1,17 @@
+auth:
+#select the target address where to be redirected after authentication must contain protocol name (http/https) in case its not a domain name it ust include port number
+  upstream: 'http://kafdrop.nemer-amq.svc.cluster.local:9000'
+#select the mail domain to be allowed for authentication
+  emailDomain: redhatt.com
+#select cookie secret name must be 16 bytes or 24 or 32
+  cookieSecretName: SECRET1234567890123456
+#cookie saving refresh rate in seconds
+  cookieRefreshSec: 20
+#number of replicas for the deployment
+  replicas: 1
+#list of labels to add to all resources e.g:
+  # labels:
+  #   - 'someLabelName: someLabelValue'
+  #   - 'someOtherLabelName: someOtherLabelValue'
+  labels:
+    - 'app: proxy'
