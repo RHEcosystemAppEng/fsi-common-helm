@@ -56,22 +56,24 @@ kafka:
   # zkkeystoreItem: keystore.p12
   truststoreFileLocation: /etc/kafka/truststore
   keystoreFileLocation: /etc/kafka/keystore
-  truststoreSecret: demo-kafka-cluster-ca-cert
-  keystoreSecret: nemer
+  truststoreSecret: my-kafka-cluster-ca-secret-name
+  keystoreSecret: my-keystore-secret-name
   truststoreItem: ca.p12
   keystoreItem: user.p12
+
+  
 existingConfigMap: ""
 existingSecret: ""
 envs:
-  secret: {}
   config: 
     KAFKA_CLUSTERS_0_NAME: "demo-kafka"
-    KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'https://demo-kafka-kafka-external-bootstrap-nemer-amq.apps.ocp-dev01.lab.eng.tlv2.redhat.com:443'
+    KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'https://kakfa-bootstrap-servers:1234'
     KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: SSL
     KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION: "/etc/kafka/keystore/user.p12"
     KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_PASSWORD: "jAkhncrqsrgs"
     KAFKA_CLUSTERS_0_PROPERTIES_SSL_TRUSTSTORE_LOCATION: "/etc/kafka/truststore/ca.p12"
     KAFKA_CLUSTERS_0_PROPERTIES_SSL_TRUSTSTORE_PASSWORD: "M7E5g37nB04X"
+  secret: {}
 podAnnotations: {}
 
 podSecurityContext: {}
