@@ -60,9 +60,13 @@ envs:
 `#4 set the endpoint of the kafka bootstrap servers `
 
 `#5 set the kafka security protocol (currently only SSL is supported) `
+
 `#6 set the kafka keystore location (use the 2 values of $keystoreFileLocation/$keystoreItem )`
+
 `#7 set the kafka keystore password (export from the openshift secret) `
+
 `#8 set the kafka truststore location (use the 2 values of $truststoreFileLocation/$truststoreItem )`
+
 `#9 set the kafka truststore password (export from the openshift secret) `
 
 ---
@@ -107,5 +111,6 @@ auth:
 ---
 #### installation
 `fter all values got customized then the only thing left for installation as applying the chart`
+
     #RUN:
     	helm install [$CUSTOM_CHART_NAME] $PATH_TO_CHART
