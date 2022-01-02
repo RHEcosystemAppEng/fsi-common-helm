@@ -84,16 +84,7 @@ items:
             ports:
             - containerPort: 8443
               name: public
-            args:
-            - --https-address=:8443
-            - --provider=openshift
-            - --openshift-service-account={{ .Release.Name }}-proxy
-            - --upstream={{ .Values.auth.upstream }}
-            - --tls-cert=/etc/tls/private/tls.crt
-            - --tls-key=/etc/tls/private/tls.key
-            - --cookie-secret={{ .Values.auth.cookieSecretName }}
-            - --cookie-refresh={{ .Values.auth.cookieRefreshSec }}s
-            - --email-domain={{ .Values.auth.emailDomain }}
+            args: {{- include "auth-proxy.args" . | nindent 4 }}
             volumeMounts:
             - mountPath: /etc/tls/private
               name: {{ .Release.Name }}-proxy
