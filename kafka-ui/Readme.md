@@ -56,7 +56,9 @@ envs:
 ```
 
 `#3 set the cluster name `
+
 `#4 set the endpoint of the kafka bootstrap servers `
+
 `#5 set the kafka security protocol (currently only SSL is supported) `
 `#6 set the kafka keystore location (use the 2 values of $keystoreFileLocation/$keystoreItem )`
 `#7 set the kafka keystore password (export from the openshift secret) `
