@@ -1,0 +1,27 @@
+---
+kafka:
+  # replace <bootstrap-service> with the internal kafka bootstrap service and <namespace> with the namespace it's on
+  bootstrap: http://my-cluster-kafka-bootstrap.tomer-avro.svc.cluster.local:9092
+
+service:
+  # replace <registry-service> with the internal apicurio service and <namespace> with the namespace it's on
+  registry: http://apicurioreg-service.tomer-avro.svc.cluster.local:8080
+
+naming:
+  # this can be topic/record/topic_record, but for multiple topics, only topic_record is allowed
+  strategy: topic_record
+
+# a minimum of 1 topic is required
+topics:
+  - sometopic1
+  - sometopictoo
+  - somemoretopic
+
+encoded:
+  # this is an example of a real tar.gz archive containing multiple files while only 3 of them are valid schemas (.{json,avsc,avro})
+  archive: |
+    H4sIAAAAAAAAA+2Y24rbMBCGfZ2nML4OtnwU9AEKvWgpdKEXpQTHVjZebCtI8pay5N0ryTmVdSo1GC1L5rsxlkce0D//jBPOqkgQLiJGOB1YRXhU0U7e1dtSRLzakq6MdgPfEhaVz4welnjk2YMkGOfqGuMcXV6PeHEWF2mK4jxJPZSkOMaen/9HjpsZuCiZ73uCdoRtmqtxpufvFH6r/mrTarwJy2de/SOHErgosqv6p3Ex6p8UUvpY6o8RzjwfuTiAO9f/ZeH7QV92hO/KigQf/EDKH47yhwd5R/lDJf9hiQdLtU/83uktjFSU1eOaepdae5D10fSP33T8+GjTkLbm8uEPead4OUXr6/L8Ri6Y3Bzsl68im/oyrqbDuiXBXob9XOwXb32a74+b/c+H9Ya2tVw25rDu/7r9y7gkx6iA/u+CGfS/mAQrQWn4xGn/Vw5T/8/ksD/1/zzx5EDABfR/J7jp/w+UGkdA2VMh03yxngSHDZ8mB8JEeF2T+qPKP/X6ex0gc3z/rTrKiC6P6Rxm/ydn/8tvQSQHgfwMBP87wI3/P8sCMTYAVUX27lfRttZXsa+cv6a0JWV/v9bXzOJ/daQt4fxKDuPvv6w4/f7PMqT8j3AC/neBo/l/KBBjDzhWkn0fOO6Y7gV37W0bZvH/L0b7x1Cd/WQOs//jC//nyv9pWoD/XeDG/99VgagmYGwAupTs3a/Dwfq3M4v/d7TpRXg1h9H/aX7+/1/5P8GZXAL/O8CN/7+qAjF6X5eRvfd1OHgfAAAAAAAAAADAjj85mSqvACgAAA==
+
+# labels are implemented with both the configmap and the pod
+labels:
+  - 'app: schema-pusher-app'

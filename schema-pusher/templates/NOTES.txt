@@ -1,0 +1,8 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+Useful commands:
+
+    $ helm status {{ .Release.Name }}
+    $ helm uninstall {{ .Release.Name }}

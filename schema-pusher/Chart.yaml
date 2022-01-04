@@ -1,0 +1,11 @@
+---
+apiVersion: v2
+name: schema-pusher
+version: 0.1.0
+description: A Helm chart for pushing schema files to Red Hat's Service Registry
+type: application
+keywords:
+  - schema-registry
+  - service-registry
+appVersion: 0.1.0
+icon: https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/red-hat-logo.png

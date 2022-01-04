@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-pod
+  labels:
+    - app.kubernetes.io/name: schema-pusher
+    - helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    - app.kubernetes.io/managed-by: {{ .Release.Service }}
+    - app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- range $.Values.labels }}
+        {{ . }}
+    {{- end }}
+spec:
+  volumes:
+  - name: config
+    configMap:
+      name: {{ .Release.Name }}-configmap
+  restartPolicy: Never
+  containers:
+  - name: {{ .Release.Name }}-container
+    image: quay.io/ecosystem-appeng/schema-pusher:0.1.0
+    command: [ "/bin/bash", "-c", "--" ]
+    args:
+      - >
+        topic_args=""
+        && IFS=',' read -ra topics <<< $(cat /config/topics)
+        && for topic in "${topics[@]}"; do topic_args+=" --topic $topic"; done
+        && /app/entrypoint.sh
+        --bootstrap $(cat /config/kafka.bootstrap)
+        --registry $(cat /config/service.registry)
+        --strategy $(cat /config/naming.strategy)
+        $topic_args
+        --content $(cat /config/encoded.archive | base64 -w 0 -)
+    volumeMounts:
+    - name: config
+      mountPath: /config
+      readOnly: true
