@@ -4,10 +4,10 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
   labels:
-    - app.kubernetes.io/name: schema-pusher
-    - helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    - app.kubernetes.io/managed-by: {{ .Release.Service }}
-    - app.kubernetes.io/instance: {{ .Release.Name }}
+    # - app.kubernetes.io/name: schema-pusher
+    # - helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    # - app.kubernetes.io/managed-by: {{ .Release.Service }}
+    # - app.kubernetes.io/instance: {{ .Release.Name }}
     {{- range $.Values.labels }}
         {{ . }}
     {{- end }}
