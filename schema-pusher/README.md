@@ -2,7 +2,7 @@
 
 <!-- markdownlint-disable -->
 <a href="https://www.redhat.com/en">
-    <img src="https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/schema_pusher_helm_chart_flow.png" width="500" height="200" alt="">
+    <img src="https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/schema_pusher_helm_chart_flow.png" width="800" height="350" alt="">
 </a>
 <!-- markdownlint-restore -->
 
