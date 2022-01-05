@@ -8,4 +8,4 @@ keywords:
   - schema-registry
   - service-registry
 appVersion: 0.1.0
-icon: https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/red-hat-logo.png
+icon: https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/red_hat_logo.png
