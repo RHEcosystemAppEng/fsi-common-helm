@@ -16,7 +16,7 @@ And if you're in for the *full* [OpenShift][12] experience,</br>
 got your underlying *Kafka* deployment covered with [AMQ Streams][14].
 
 This *Helm Chart* helps you easily migrate your various data structures, schemas to [Red Hat's Service Registry][10].</br>
-Simply create a *tar.gz* archive with all of your schema files (subfolder are ok),</br>
+Simply create a *tar.gz* archive with all of your schema files (subfolders are ok),</br>
 install this *Chart*, and get back to work.</br>
 :grin:
 
@@ -25,7 +25,9 @@ install this *Chart*, and get back to work.</br>
 This *Helm Chart* creates two resources for pushing schema files to [Red Hat's Service Registry][10]:
 
 - A [ConfigMap](templates/configmap.yaml) for storing the configuration values for the operation.
-- A [Pod](templates/pod.yaml) containing one container performing a one-time-execution of the [schema-pusher][15] image.
+- A [Pod](templates/pod.yaml) for publishing the schemas using the [schema-pusher][15] image.
+
+Both resources named after the release suffixed with a *-configmap* and *-pod* respectively.
 
 The *ConfigMap* stores the configuration for the execution,</br>
 as well as a base64 encoded value representing the *tar.gz* archive containing schema files.</br>
@@ -47,7 +49,7 @@ Update [values.xml](values.xml) or use *Helm*s CLI to set the following configur
 | `naming.strategy`  | subject naming strategy (topic, record, topic_record)             | Y        | `topic_record`                                                  |
 | `topics`           | a list of one or more topics to produce the message to            | Y        | `[sometopic]`                                                   |
 | `encoded.archive`  | a base64 encoded value for a tar.gz archive containg schema files | Y        | `$(base64 -w 0 schema_files.tar.gz)`                            |
-| `labels`           | an optional list of strings represnting label for the resources   | N        | `["app: schema-pusher-app"]`                                    |
+| `labels`           | optional key-value pairs used as labels for the resources         | N        | `labelKey: labelValue`                                          |
 
 > Note, when producing messages to multiple topics, only the *topic_record* strategy is allowed.
 
