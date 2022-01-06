@@ -4,13 +4,7 @@ kind: Pod
 metadata:
   name: {{ .Release.Name }}-pod
   labels:
-    # - app.kubernetes.io/name: schema-pusher
-    # - helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    # - app.kubernetes.io/managed-by: {{ .Release.Service }}
-    # - app.kubernetes.io/instance: {{ .Release.Name }}
-    {{- range $.Values.labels }}
-        {{ . }}
-    {{- end }}
+    {{- include "resource.labels" . | nindent 4 }}
 spec:
   volumes:
   - name: config
@@ -19,7 +13,7 @@ spec:
   restartPolicy: Never
   containers:
   - name: {{ .Release.Name }}-container
-    image: quay.io/ecosystem-appeng/schema-pusher:0.1.0
+    image: quay.io/ecosystem-appeng/schema-pusher:{{ .Chart.AppVersion }}
     command: [ "/bin/bash", "-c", "--" ]
     args:
       - >

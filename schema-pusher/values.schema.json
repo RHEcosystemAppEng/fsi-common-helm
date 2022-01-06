@@ -83,12 +83,8 @@
       }
     },
     "labels": {
-      "type": "array",
-      "description": "Labels for implementing with the created resources.",
-      "items": {
-        "type": "string",
-        "pattern": ".*: .*$"
-      }
+      "type": "object",
+      "description": "Labels for implementing with the created resources."
     }
   },
   "$defs": {
