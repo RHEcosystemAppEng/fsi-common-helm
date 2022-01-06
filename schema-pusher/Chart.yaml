@@ -2,7 +2,7 @@
 apiVersion: v2
 name: schema-pusher
 version: 1.0.0
-appVersion: 0.1.0
+appVersion: 0.1.1
 description: A Helm chart for pushing schema files to Red Hat's Service Registry
 type: application
 keywords:
