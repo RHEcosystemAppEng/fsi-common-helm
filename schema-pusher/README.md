@@ -45,7 +45,7 @@ Update [values.xml](values.xml) or use *Helm*s CLI to set the following configur
 | Parameter          | Description                                                       | Required | Example                                                         |
 | ------------------ | ----------------------------------------------------------------- | :------: | --------------------------------------------------------------- |
 | `kafka.bootstrap`  | kafka's bootstrap service url                                     | Y        | `http://<bootstrap-service>.<namespace>.svc.cluster.local:9092` |
-| `service.registry` | redhat's service registry service url                             | Y        | `http://<registry-service>.<namespace>.svc.cluster.local:9092`  |
+| `service.registry` | redhat's service registry service url                             | Y        | `http://<registry-service>.<namespace>.svc.cluster.local:8080`  |
 | `naming.strategy`  | subject naming strategy (topic, record, topic_record)             | Y        | `topic_record`                                                  |
 | `topics`           | a list of one or more topics to produce the message to            | Y        | `[sometopic]`                                                   |
 | `encoded.archive`  | a base64 encoded value for a tar.gz archive containg schema files | Y        | `$(base64 -w 0 schema_files.tar.gz)`                            |
