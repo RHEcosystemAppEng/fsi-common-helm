@@ -1,6 +1,6 @@
 ---
 kafka:
-  # replace <bootstrap-service> with the internal kafka bootstrap service and <namespace> with the namespace it's on
+  # replace <kafka-bootstrap-url-goes-here> with the kafka bootstrap route
   bootstrap: https://<kafka-bootstrap-url-goes-here>:443/
   # if the kafka server is secured with a self-signed certificate, add the secret name that holds the ca.crt key
   # certificate:
@@ -8,6 +8,7 @@ kafka:
 
 service:
   # replace <registry-service> with the internal apicurio service and <namespace> with the namespace it's on
+  # you can also use the route instead
   registry: http://<registry-service>.<namespace>.svc.cluster.local:8080
 
 naming:
