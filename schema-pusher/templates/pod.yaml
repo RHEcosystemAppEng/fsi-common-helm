@@ -10,6 +10,11 @@ spec:
   - name: config
     configMap:
       name: {{ .Release.Name }}-configmap
+  {{- if .Values.kafka.certificate }}
+  - name: kafka-certificate
+    secret:
+      secretName: {{ .Values.kafka.certificate.secret }}
+  {{- end }}
   restartPolicy: Never
   containers:
   - name: {{ .Release.Name }}-container
@@ -26,7 +31,15 @@ spec:
         --strategy $(cat /config/naming.strategy)
         $topic_args
         --content $(cat /config/encoded.archive | base64 -w 0 -)
+      {{- if .Values.kafka.certificate }}
+        --certificate $(cat /config/kafka.certificate/ca.crt | base64 -w 0 -)
+      {{- end }}
     volumeMounts:
     - name: config
       mountPath: /config
       readOnly: true
+    {{- if .Values.kafka.certificate }}
+    - name: kafka-certificate
+      mountPath: /config/kafka.certificate
+      readOnly: true
+    {{- end }}

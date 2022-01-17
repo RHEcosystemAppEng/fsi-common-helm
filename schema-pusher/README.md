@@ -38,18 +38,24 @@ and produces the schema files recursively as messages per topic specified.
 
 - A *tar.gz* archive containing the desired schema files for pushing.
 
+> If your *Kafka* deployment is secured with a self-signed certificate, </br>
+> you need to get the name of the *Secret* containing the *ca.crt* data key for your deployment.</br>
+> Look for a *Secret* named after your deployment concatinated with *-cluster-ca-cert*, i.e.
+> *my-kafka-cluster-cluster-ca-cert*.
+
 ## Configuration Values
 
 Update [values.xml](values.xml) or use *Helm*s CLI to set the following configuration parameters:
 
-| Parameter          | Description                                                       | Required | Example                                                         |
-| ------------------ | ----------------------------------------------------------------- | :------: | --------------------------------------------------------------- |
-| `kafka.bootstrap`  | kafka's bootstrap service url                                     | Y        | `http://<bootstrap-service>.<namespace>.svc.cluster.local:9092` |
-| `service.registry` | redhat's service registry service url                             | Y        | `http://<registry-service>.<namespace>.svc.cluster.local:8080`  |
-| `naming.strategy`  | subject naming strategy (topic, record, topic_record)             | Y        | `topic_record`                                                  |
-| `topics`           | a list of one or more topics to produce the message to            | Y        | `[sometopic]`                                                   |
-| `encoded.archive`  | a base64 encoded value for a tar.gz archive containg schema files | Y        | `$(base64 -w 0 schema_files.tar.gz)`                            |
-| `labels`           | optional key-value pairs used as labels for the resources         | N        | `labelKey: labelValue`                                          |
+| Parameter                  | Description                                                       | Required | Example                                                         |
+| -------------------------- | ----------------------------------------------------------------- | :------: | --------------------------------------------------------------- |
+| `kafka.bootstrap`          | kafka's bootstrap service url                                     | Y        | `http://<bootstrap-service>.<namespace>.svc.cluster.local:9092` |
+| `kafka.certificate.secert` | secret name containing the *ca.crt* data key for your deployment  | N        | `my-kafka-cluster-cluster-ca-cert`                              |
+| `service.registry`         | redhat's service registry service url                             | Y        | `http://<registry-service>.<namespace>.svc.cluster.local:8080`  |
+| `naming.strategy`          | subject naming strategy (topic, record, topic_record)             | Y        | `topic_record`                                                  |
+| `topics`                   | a list of one or more topics to produce the message to            | Y        | `[sometopic]`                                                   |
+| `encoded.archive`          | a base64 encoded value for a tar.gz archive containg schema files | Y        | `$(base64 -w 0 schema_files.tar.gz)`                            |
+| `labels`                   | optional key-value pairs used as labels for the resources         | N        | `labelKey: labelValue`                                          |
 
 > Note, when producing messages to multiple topics, only the *topic_record* strategy is allowed.
 
