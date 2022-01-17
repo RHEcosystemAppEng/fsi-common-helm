@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "resource.labels" . | nindent 4 }}
 data:
-  kafka.bootstrap: {{ .Values.kafka.bootstrap }} \
+  kafka.bootstrap: {{ .Values.kafka.bootstrap }}
   service.registry: {{ .Values.service.registry }}
   naming.strategy: {{ .Values.naming.strategy }}
   topics: {{ join "," .Values.topics }}
