@@ -45,7 +45,7 @@ and produces the schema files recursively as messages per topic specified.
 
 ## Configuration Values
 
-Update [values.xml](values.xml) or use *Helm*s CLI to set the following configuration parameters:
+Update [values.yaml](values.yaml) or use *Helm*s CLI to set the following configuration parameters:
 
 | Parameter                  | Description                                                       | Required | Example                                                         |
 | -------------------------- | ----------------------------------------------------------------- | :------: | --------------------------------------------------------------- |
