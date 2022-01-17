@@ -1,8 +1,9 @@
 Thank you for installing {{ .Chart.Name }}.
-
 Your release is named {{ .Release.Name }}.
+The following resources were created:
+    - a ConfigMap named {{ .Release.Name }}-configmap
+    - a Pod named {{ .Release.Name }}-pod
 
 Useful commands:
-
     $ helm status {{ .Release.Name }}
     $ helm uninstall {{ .Release.Name }}
