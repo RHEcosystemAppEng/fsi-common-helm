@@ -1,0 +1,69 @@
+name: rh-service-registry
+bootstrapServers: essence-kafka-demo-kafka-external-bootstrap-kafka-essence-demo.apps.o7pr5dba.westeurope.aroapp.io:443
+namespace: kafka-essence-demo
+userName: schema-registry-user
+clusterName: essence-kafka-demo
+domain: apps.o7pr5dba.westeurope.aroapp.io
+logLevel: INFO
+persistence: kafkasql
+labels:
+  - 'app: rhsr'
+  - 'dep: rhsr-deployment' 
+
+
+keycloak:
+  enabled: true
+  useRHSSOoperator: true
+  enableExternalAccess: true
+  instances: 1
+  realm:
+    uiClientID: registry-ui-client
+    apiClientID: registry-api-client
+    adminUser:
+      enabled: true
+      name: finastra-admin
+      password: 'a1s2d3f4'
+    developerUser:
+      enabled: true
+      name: registry-developer
+      password: 'a1s2d3f4'
+    readerUser:
+      enabled: true
+      name: registry-user
+      password: 'a1s2d3f4'
+  labels:
+  - 'app: keycloak'
+  - 'dep: keycloak-deployment' 
+  
+
+auth:
+  #set to false in order to disable the authentication proxy side car
+  enabled: false
+  #select the target address where to be redirected after authentication must contain protocol name (http/https) in case its not a domain name it ust include port number
+  upstream: 'http://rh-service-registry-rh-service-registry-service:8080/'
+  #set as true if you need to use email domain authentication
+  useEmailDomain: false
+  #select the mail domain to be allowed for authentication
+  emailDomain: redhat.com
+  #set true if you need to use role based authentication
+  useSar: true
+  #select the resource where access is needed for a user to it in order to be able to bypass the proxy
+  #  "namespace":"app-dev","resource":"services","name":"proxy","verb":"get"}
+  resource:
+    namespace: "kafka-essence-demo"
+    kind: "services"
+    name: rh-service-registry-rh-service-registry-service
+    verb: get
+  #select cookie secret name must be 16 bytes or 24 or 32
+  cookieSecretName: RHSERG1234567890123456
+  #cookie saving refresh rate in seconds
+  cookieRefreshSec: 0
+  #number of replicas for the deployment
+  replicas: 1
+  #list of labels to add to all resources e.g:
+  # labels:
+  #   - 'someLabelName: someLabelValue'
+  #   - 'someOtherLabelName: someOtherLabelValue'
+  labels:
+  - 'app: auth-proxy'
+  - 'dep: rhsr-auth-proxy' 

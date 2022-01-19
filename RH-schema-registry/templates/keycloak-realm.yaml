@@ -1,0 +1,65 @@
+{{ if .Values.keycloak.enabled }}
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: {{ .Release.Name }}-keycloak-realm
+  namespace: {{ .Release.Namespace}}
+spec:
+  instanceSelector:
+    matchLabels:
+      {{- range $.Values.keycloak.labels }}
+        {{ . }}
+      {{- end }} 
+  realm:
+    clients:
+      - clientId: {{ .Values.keycloak.realm.uiClientID }}
+        directAccessGrantsEnabled: false
+        implicitFlowEnabled: true
+        publicClient: true
+        redirectUris:
+          - '*'
+        standardFlowEnabled: true
+        webOrigins:
+          - '*'
+      - clientId: {{ .Values.keycloak.realm.apiClientID }}
+        directAccessGrantsEnabled: true
+        implicitFlowEnabled: false
+        publicClient: true
+        redirectUris:
+          - '*'
+        standardFlowEnabled: false
+        webOrigins:
+          - '*'
+    displayName: {{ .Release.Name }}-keycloak-realm
+    enabled: true
+    id: {{ .Release.Name }}-keycloak-realm
+    realm: {{ .Release.Name }}-keycloak-realm
+    roles:
+      realm:
+        - name: sr-admin
+        - name: sr-developer
+        - name: sr-readonly
+    sslRequired: none
+    users:
+      - credentials: 
+          - type: password
+            value: {{ .Values.keycloak.realm.adminUser.password | quote }}
+        enabled: {{ .Values.keycloak.realm.adminUser.enabled }}
+        realmRoles:
+          - sr-admin
+        username: {{ .Values.keycloak.realm.adminUser.name }}
+      - credentials: 
+          - type: password
+            value: {{ .Values.keycloak.realm.developerUser.password }}
+        enabled: {{ .Values.keycloak.realm.developerUser.enabled }}
+        realmRoles:
+          - sr-developer
+        username: {{ .Values.keycloak.realm.developerUser.name }}
+      - credentials: 
+          - type: password
+            value: {{ .Values.keycloak.realm.readerUser.password }}
+        enabled: {{ .Values.keycloak.realm.readerUser.enabled }}
+        realmRoles:
+          - sr-readonly
+        username: {{ .Values.keycloak.realm.readerUser.name }}
+{{ end }}

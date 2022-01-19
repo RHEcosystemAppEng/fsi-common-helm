@@ -1,0 +1,15 @@
+apiVersion: registry.apicur.io/v1
+kind: ApicurioRegistry
+metadata:
+  name: {{ .Values.name }}-{{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  configuration:
+    kafkasql:
+      bootstrapServers: {{ .Values.bootstrapServers }}
+      security:
+        tls:
+          keystoreSecretName: {{ .Values.userName }}-{{ .Release.Name }}
+          truststoreSecretName: {{ .Values.clusterName }}-cluster-ca-cert
+    logLevel: {{.Values.logLevel }}
+    persistence: {{ .Values.persistence }}
