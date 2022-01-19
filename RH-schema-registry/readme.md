@@ -1,3 +1,12 @@
+---
+
+# Schema Registry
+----
+### Features
+-  deploy redhat schema registry over openshift cluster with dynamic configuration
+-  deploy keycloak dynamically for securing the registry
+- deploy RH/AuthProxy for securing the registry ui (alternative for keycloak)
+
 
 ---
 # SchemaRegistry configuration
