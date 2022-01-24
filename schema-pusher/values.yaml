@@ -5,11 +5,11 @@ kafka:
   # optionally specify a secrets containing a p12 and a password data entries to use with the kafka producer
   # a server secret containing a ca.p12 and ca.password data entries to be used as a truststore
   # a user secret containing a user.p12 and user.password data entries to be used as a keystore
-  certificates:
-    server:
-      secret: kafka-cluster-ca-cert
-    user:
-      secret: kafka-user-cert
+  # certificates:
+  #   server:
+  #     secret: kafka-cluster-ca-cert
+  #   user:
+  #     secret: kafka-user-cert
 
 service:
   # replace <service-registry-url-goes-here> with red hat's service registry instance
@@ -33,5 +33,5 @@ encoded:
 
 # labels (key: value) are implemented with both the configmap and the pod
 # this is optional and will be added on top of hard-coded labels, you can omit this key
-labels:
-  description: application_for_pushing_schemas_to_red_hat_service_registry
+# labels:
+#   description: application_for_pushing_schemas_to_red_hat_service_registry
