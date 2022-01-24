@@ -22,16 +22,47 @@
           "description": "Bootstrap URL",
           "$ref": "#/$defs/url"
         },
-        "certificate": {
+        "certificates": {
           "type": "object",
-          "description": "Certificate information",
-          "required": [
-            "secret"
+          "description": "Certificates information",
+          "oneOff": [
+            {
+              "required": [
+                "server"
+              ]
+            },
+            {
+              "required": [
+                "user"
+              ]
+            }
           ],
           "properties": {
-            "secret": {
-              "type": "string",
-              "description": "The name of the kafka cluster certificate secret with a ca.crt key in it"
+            "server": {
+              "type": "object",
+              "description": "Server certificate information",
+              "required": [
+                "secret"
+              ],
+              "properties": {
+                "secret": {
+                  "type": "string",
+                  "description": "The name of the secret containing the server p12 store"
+                }
+              }
+            },
+            "user": {
+              "type": "object",
+              "description": "User certificate information",
+              "required": [
+                "secret"
+              ],
+              "properties": {
+                "secret": {
+                  "type": "string",
+                  "description": "The name of the secret containing the user p12 store"
+                }
+              }
             }
           }
         }

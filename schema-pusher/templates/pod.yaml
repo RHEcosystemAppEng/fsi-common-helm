@@ -10,10 +10,17 @@ spec:
   - name: config
     configMap:
       name: {{ .Release.Name }}-configmap
-  {{- if .Values.kafka.certificate }}
-  - name: kafka-certificate
+  {{- if .Values.kafka.certificates }}
+  {{- if .Values.kafka.certificates.server }}
+  - name: kafka-server-certificate
     secret:
-      secretName: {{ .Values.kafka.certificate.secret }}
+      secretName: {{ .Values.kafka.certificates.server.secret }}
+  {{- end }}
+  {{- if .Values.kafka.certificates.user }}
+  - name: kafka-user-certificate
+    secret:
+      secretName: {{ .Values.kafka.certificates.user.secret }}
+  {{- end }}
   {{- end }}
   restartPolicy: Never
   containers:
@@ -31,15 +38,29 @@ spec:
         --strategy $(cat /config/naming.strategy)
         $topic_args
         --content $(cat /config/encoded.archive | base64 -w 0 -)
-      {{- if .Values.kafka.certificate }}
-        --certificate $(cat /config/kafka.certificate/ca.crt | base64 -w 0 -)
+      {{- if .Values.kafka.certificates }}
+      {{- if .Values.kafka.certificates.server }}
+        --truststore $(cat /config/kafka.certificates.server/ca.p12 | base64 -w 0 -)
+        --truststorePassword $(cat /config/kafka.certificates.server/ca.password)
+      {{- end }}
+      {{- if .Values.kafka.certificates.user }}
+        --keystore $(cat /config/kafka.certificates.user/user.p12 | base64 -w 0 -)
+        --keystorePassword $(cat /config/kafka.certificates.user/user.password)
+      {{- end }}
       {{- end }}
     volumeMounts:
     - name: config
       mountPath: /config
       readOnly: true
-    {{- if .Values.kafka.certificate }}
-    - name: kafka-certificate
-      mountPath: /config/kafka.certificate
+    {{- if .Values.kafka.certificates }}
+    {{- if .Values.kafka.certificates.server }}
+    - name: kafka-server-certificate
+      mountPath: /config/kafka.certificates.server
       readOnly: true
+    {{- end }}
+    {{- if .Values.kafka.certificates.user }}
+    - name: kafka-user-certificate
+      mountPath: /config/kafka.certificates.user
+      readOnly: true
+    {{- end }}
     {{- end }}
