@@ -11,5 +11,13 @@ spec:
         tls:
           keystoreSecretName: {{ .Values.userName }}-{{ .Release.Name }}
           truststoreSecretName: {{ .Values.clusterName }}-cluster-ca-cert
+{{ if .Values.keycloak.enabled }}
+    security:
+      keycloak:
+        url: "http://keycloak-{{ .Release.Namespace }}.{{ .Values.domain }}/auth"
+        realm: {{ .Values.keycloak.realm.name | quote }}
+        apiClientId: {{ .Values.keycloak.realm.uiClientID | quote }}
+        uiClientId: {{ .Values.keycloak.realm.apiClientID | quote }}
+{{ end }}
     logLevel: {{.Values.logLevel }}
     persistence: {{ .Values.persistence }}
