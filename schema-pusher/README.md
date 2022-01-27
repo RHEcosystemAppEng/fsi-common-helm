@@ -25,13 +25,13 @@ install this *Chart*, and get back to work.</br>
 Adding the repo:
 
 ```shell
-helm repo add rheae-common-helm https://rhecosystemappeng.github.io/fsi-common-helm/
+helm repo add fsi-common-helm https://rhecosystemappeng.github.io/fsi-common-helm/
 ```
 
 Installing the chart:
 
 ```shell
-helm install rheae-common-helm/schema-pusher --generate-name \
+helm install fsi-common-helm/schema-pusher --generate-name \
 --set kafka.bootstrap=https://<kafka-bootstrap-url-goes-here>:443 \
 --set kafka.certificates.server.secret=kafka-cluster-ca-cert \
 --set kafka.certificates.user.secret=kafka-user-cert \
@@ -39,12 +39,6 @@ helm install rheae-common-helm/schema-pusher --generate-name \
 --set topics[0]=sometopic1 --set topics[1]=anothertopic \
 --set naming.strategy=topic_record \
 --set encoded.archive=$(base64 -w 0 schemas_files.tar.gz)
-```
-
-Updating the repo:
-
-```shell
-helm repo update rheae-common-helm
 ```
 
 ## Chart operation
