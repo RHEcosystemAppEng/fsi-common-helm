@@ -1,7 +1,7 @@
 ---
 kafka:
   # replace <kafka-bootstrap-url-goes-here> with the kafka bootstrap route
-  bootstrap: https://<kafka-bootstrap-url-goes-here>:443/
+  bootstrap: https://<kafka-bootstrap-url-goes-here>:443
   # optionally specify a secrets containing a p12 and a password data entries to use with the kafka producer
   # a server secret containing a ca.p12 and ca.password data entries to be used as a truststore
   # a user secret containing a user.p12 and user.password data entries to be used as a keystore
@@ -12,9 +12,9 @@ kafka:
   #     secret: kafka-user-cert
 
 service:
-  # replace <service-registry-url-goes-here> with red hat's service registry instance
+  # replace <service-registry-goes-here> with red hat's service registry instance
   # you can also use the service name internally inside your cluster
-  registry: http://<service-registry-url-goes-here>/
+  registry: http://<service-registry-goes-here>
 
 naming:
   # this can be topic/record/topic_record, but for multiple topics, only topic_record is allowed
