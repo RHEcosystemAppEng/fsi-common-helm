@@ -74,10 +74,7 @@ Update [values.yaml](values.yaml) or use *helm* to set the following configurati
 | `encoded.archive`                  | a base64 encoded value for a tar.gz archive containg schema files      | Y        | `$(base64 -w 0 schema_files.tar.gz)`          |
 | `labels`                           | optional key-value pairs used as labels for the resources              | N        | `labelKey: labelValue`                        |
 
-> Note, when producing messages to multiple topics, only the *topic_record* strategy is allowed. </br>
-
-> Note, You can use services instead routes, i.e.</br>
-> `http://<registry-service>.<namespace>.svc.cluster.local:8080`.
+> Note, when producing messages to multiple topics, only the *topic_record* strategy is allowed.
 
 ## Supported schema types
 
