@@ -20,7 +20,7 @@ Simply create a *tar.gz* archive with all of your schema files (subfolders are o
 install this *Chart*, and get back to work.</br>
 :grin:
 
-## Installing
+## Installation
 
 Adding the repo:
 
