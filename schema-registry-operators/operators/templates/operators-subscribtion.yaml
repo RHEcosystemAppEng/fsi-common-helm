@@ -1,0 +1,48 @@
+{{ if .Values.global.useRHSSOoperator }}
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: rhsso-operator
+  namespace: {{ .Release.Namespace }}
+  # annotations:
+  #   "helm.sh/hook": pre-install
+spec:
+  channel: {{ .Values.global.rhsso-subscription.channel }}
+  installPlanApproval: {{ .Values.global.rhsso-subscription.installPlanApproval }}
+  name: {{ .Values.global.rhsso-subscription.name }}
+  source: {{ .Values.global.rhsso-subscription.source }}
+  sourceNamespace: {{ .Values.global.rhsso-subscription.sourceNamespace }}
+  startingCSV: {{ .Values.global.rhsso-subscription.startingCSV }}
+{{ else }}
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: keycloak-operator-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  # annotations:
+  #   "helm.sh/hook": pre-install
+spec:
+  channel: alpha
+  installPlanApproval: Automatic
+  name: keycloak-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: keycloak-operator.v16.1.0
+{{ end }}
+---
+{{ if .Values.global.subscription.install }}
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.global.subscription.name }}-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace}}
+  # annotations:
+  #   "helm.sh/hook": pre-install
+spec:
+  channel: {{ .Values.global.rhsr-subscription.channel }}
+  installPlanApproval: {{ .Values.global.rhsr-subscription.installPlanApproval }}
+  name: {{ .Values.global.rhsr-subscription.name }}
+  source: {{ .Values.global.rhsr-subscription.source }}
+  sourceNamespace: {{ .Values.global.rhsr-subscription.sourceNamespace }}
+  startingCSV: {{ .Values.global.rhsr-subscription.startingCSV }}
+{{ end }}

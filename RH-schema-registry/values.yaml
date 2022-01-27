@@ -1,27 +1,37 @@
+global:
+  install-operators-auto: false
+  useRHSSOoperator: true
+  installOG: false
+  rhsr-subscription:
+    install: false
+    channel: 2.x
+    installPlanApproval: Manual
+    name: service-registry-operator
+    source: redhat-operators
+    sourceNamespace: openshift-marketplace
+    startingCSV: service-registry-operator.v2.0.2
+  rhsso-subscription:
+    channel: stable
+    installPlanApproval: Manual
+    name: rhsso-operator
+    source: redhat-operators
+    sourceNamespace: openshift-marketplace
+    startingCSV: rhsso-operator.7.5.1-opr-006
+
 name: rh-service-registry
-installOG: false
-bootstrapServers: essence-kafka-demo-kafka-external-bootstrap-kafka-essence-demo.apps.o7pr5dba.westeurope.aroapp.io:443
-namespace: kafka-essence-demo
+bootstrapServers: https://sut-kafka-external-bootstrap-fo-kafka-perf.fo-sut.pintc010042040201050a001.sut.azr.fusionoperate.io:443
+namespace: fo-kafka-perf
 userName: schema-registry-user
-clusterName: essence-kafka-demo
-domain: apps.o7pr5dba.westeurope.aroapp.io
+clusterName: sut-kafka
+domain: fo-sut.pintc010042040201050a001.sut.azr.fusionoperate.io
 logLevel: INFO
 persistence: kafkasql
 labels:
   - 'app: rhsr'
   - 'dep: rhsr-deployment' 
 
-subscription:
-  channel: 2.x
-  installPlanApproval: Automatic
-  name: service-registry-operator
-  source: redhat-operators
-  sourceNamespace: openshift-marketplace
-  startingCSV: service-registry-operator.v2.0.2
-
 keycloak:
   enabled: true
-  useRHSSOoperator: true
   enableExternalAccess: true
   instances: 1
   realm:
