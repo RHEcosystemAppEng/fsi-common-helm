@@ -20,6 +20,27 @@ Simply create a *tar.gz* archive with all of your schema files (subfolders are o
 install this *Chart*, and get back to work.</br>
 :grin:
 
+## Installing
+
+Adding the repo:
+
+```shell
+helm repo add fsi-common-helm https://rhecosystemappeng.github.io/fsi-common-helm/
+```
+
+Installing the chart:
+
+```shell
+helm install fsi-common-helm/schema-pusher --generate-name \
+--set kafka.bootstrap=https://<kafka-bootstrap-url-goes-here>:443 \
+--set kafka.certificates.server.secret=kafka-cluster-ca-cert \
+--set kafka.certificates.user.secret=kafka-user-cert \
+--set service.registry=http://<service-registry-goes-here> \
+--set topics[0]=sometopic1 --set topics[1]=anothertopic \
+--set naming.strategy=topic_record \
+--set encoded.archive=$(base64 -w 0 schemas_files.tar.gz)
+```
+
 ## Chart operation
 
 This *Helm Chart* creates two resources for pushing schema files to [Red Hat's Service Registry][10]:
@@ -53,10 +74,7 @@ Update [values.yaml](values.yaml) or use *helm* to set the following configurati
 | `encoded.archive`                  | a base64 encoded value for a tar.gz archive containg schema files      | Y        | `$(base64 -w 0 schema_files.tar.gz)`          |
 | `labels`                           | optional key-value pairs used as labels for the resources              | N        | `labelKey: labelValue`                        |
 
-> Note, when producing messages to multiple topics, only the *topic_record* strategy is allowed. </br>
-
-> Note, You can use services instead routes, i.e.</br>
-> `http://<registry-service>.<namespace>.svc.cluster.local:8080`.
+> Note, when producing messages to multiple topics, only the *topic_record* strategy is allowed.
 
 ## Supported schema types
 
