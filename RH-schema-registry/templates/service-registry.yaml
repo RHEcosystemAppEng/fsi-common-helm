@@ -3,6 +3,10 @@ kind: ApicurioRegistry
 metadata:
   name: {{ .Values.name }}-{{ .Release.Name }}
   namespace: {{ .Values.namespace }}
+  labels:
+    {{- range $.Values.labels }}
+      {{ . }}
+    {{- end }} 
 spec:
   configuration:
     kafkasql:
