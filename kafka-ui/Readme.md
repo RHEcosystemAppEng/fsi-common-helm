@@ -46,7 +46,7 @@ Set up UI for Apache Kafka with just a couple of easy commands to visualize your
 ```yaml
 envs:
   config: 
-    KAFKA_CLUSTERS_0_NAME: "demo-kafka"
+    KAFKA_CLUSTERS_0_NAME: "sut-kafka"
     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'https://kakfa-bootstrap-servers:1234'
     KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: SSL
     KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION: "/etc/kafka/keystore/user.p12"

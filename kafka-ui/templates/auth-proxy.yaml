@@ -25,6 +25,8 @@ items:
         {{ . }}
       {{- end }} 
   spec:
+    host: >-
+      ui-proxy-{{ .Release.Name }}-{{ .Release.Namespace }}.{{ .Values.domain }}
     to:
       kind: Service
       name: {{ .Release.Name }}-proxy

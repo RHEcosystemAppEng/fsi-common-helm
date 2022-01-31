@@ -1,0 +1,44 @@
+{{ if .Values.installRHSSOOperator }}
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: rhsso-operator
+  namespace: {{ .Release.Namespace }}
+spec:
+  channel: {{ .Values.rhssoSubscription.channel }}
+  installPlanApproval: {{ .Values.rhssoSubscription.installPlanApproval }}
+  name: {{ .Values.rhssoSubscription.name }}
+  source: {{ .Values.rhssoSubscription.source }}
+  sourceNamespace: {{ .Values.rhssoSubscription.sourceNamespace }}
+  startingCSV: {{ .Values.rhssoSubscription.startingCSV }}
+{{ end }}
+---
+{{ if .Values.installKeycloakOperator }}
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: keycloak-operator-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  channel: {{ .Values.keycloakSubscription.channel }}
+  installPlanApproval: {{ .Values.keycloakSubscription.installPlanApproval }}
+  name: {{ .Values.keycloakSubscription.name }}
+  source: {{ .Values.keycloakSubscription.source }}
+  sourceNamespace: {{ .Values.keycloakSubscription.sourceNamespace }}
+  startingCSV: {{ .Values.keycloakSubscription.startingCSV }}
+{{ end }}
+---
+{{ if .Values.installRHSROperator }}
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.rhsrSubscription.name }}-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace}}
+spec:
+  channel: {{ .Values.rhsrSubscription.channel }}
+  installPlanApproval: {{ .Values.rhsrSubscription.installPlanApproval }}
+  name: {{ .Values.rhsrSubscription.name }}
+  source: {{ .Values.rhsrSubscription.source }}
+  sourceNamespace: {{ .Values.rhsrSubscription.sourceNamespace }}
+  startingCSV: {{ .Values.rhsrSubscription.startingCSV }}
+{{ end }}

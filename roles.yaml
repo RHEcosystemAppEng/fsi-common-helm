@@ -1,0 +1,21 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: route-patcher
+rules:
+- apiGroups: ["route.openshift.io"]
+  resources: ["routes"]
+  verbs: ["*"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: route-patcher-binding
+subjects:
+- kind: ServiceAccount
+  name: rhsso-operator
+  namespace: fo-kafka-perf
+roleRef:
+  kind: Role
+  name: route-patcher
+  apiGroup: ""

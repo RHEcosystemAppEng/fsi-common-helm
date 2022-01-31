@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "kafka-ui.fullname" . }}
+  name: provectus-{{ .Release.Name }}
   labels:
     {{- include "kafka-ui.labels" . | nindent 4 }}
 {{- if .Values.service.annotations }}

@@ -1,0 +1,22 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: rhsr-{{ .Release.Name }}-https
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- range $.Values.labels }}
+      {{ . }}
+    {{- end }} 
+spec:
+  host: >-
+    rh-service-registry-{{ .Release.Name }}-{{ .Release.Namespace }}.{{ .Values.domain }}
+  to:
+    kind: Service
+    name: rh-service-registry-{{ .Release.Name }}-service
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

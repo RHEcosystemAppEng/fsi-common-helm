@@ -1,0 +1,28 @@
+installOG: false
+installRHSROperator: true
+installRHSSOOperator: true
+installKeycloakOperator: false
+rhsrSubscription:
+  channel: 2.x
+  installPlanApproval: Manual
+  name: service-registry-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: service-registry-operator.v2.0.2
+rhssoSubscription:
+  channel: stable
+  installPlanApproval: Manual
+  name: rhsso-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: rhsso-operator.7.5.1-opr-006
+keycloakSubscription:
+  channel: alpha
+  installPlanApproval: Automatic
+  name: keycloak-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: keycloak-operator.v16.1.0
+
+
+

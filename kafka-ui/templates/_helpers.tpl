@@ -70,7 +70,7 @@ Create the auth-proxy args
                                 - --https-address=:8443
                                 - --provider=openshift
                                 - --openshift-service-account={{ .Release.Name }}-proxy
-                                - --upstream={{ .Values.auth.upstream }}
+                                - --upstream=http://provectus-{{ .Release.Name }}:80
                                 - --tls-cert=/etc/tls/private/tls.crt
                                 - --tls-key=/etc/tls/private/tls.key
                                 - --cookie-secret={{ .Values.auth.cookieSecretName }}
@@ -81,7 +81,7 @@ Create the auth-proxy args
                                 - --https-address=:8443
                                 - --provider=openshift
                                 - --openshift-service-account={{ .Release.Name }}-proxy
-                                - --upstream={{ .Values.auth.upstream }}
+                                - --upstream=http://provectus-{{ .Release.Name }}:80
                                 - --tls-cert=/etc/tls/private/tls.crt
                                 - --tls-key=/etc/tls/private/tls.key
                                 - --cookie-secret={{ .Values.auth.cookieSecretName }}
@@ -91,7 +91,7 @@ Create the auth-proxy args
                                 - --https-address=:8443
                                 - --provider=openshift
                                 - --openshift-service-account={{ .Release.Name }}-proxy
-                                - --upstream={{ .Values.auth.upstream }}
+                                - --upstream=http://provectus-{{ .Release.Name }}:80
                                 - --tls-cert=/etc/tls/private/tls.crt
                                 - --tls-key=/etc/tls/private/tls.key
                                 - --cookie-secret={{ .Values.auth.cookieSecretName }}

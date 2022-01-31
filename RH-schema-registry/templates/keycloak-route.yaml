@@ -1,0 +1,26 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ .Release.Name }}-keycloak
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- range $.Values.keycloak.labels }}
+      {{ . }}
+    {{- end }} 
+  # ownerReferences:
+  #   - apiVersion: keycloak.org/v1alpha1
+  #     kind: Keycloak
+  #     name: {{ .Release.Name }}-keycloak
+  #     blockOwnerDeletion: true
+spec:
+  host: >-
+    keycloak-{{ .Release.Namespace }}.{{ .Values.domain }}
+  to:
+    kind: Service
+    name: keycloak
+    weight: 100
+  port:
+    targetPort: keycloak
+  tls:
+    termination: reencrypt
+  wildcardPolicy: None

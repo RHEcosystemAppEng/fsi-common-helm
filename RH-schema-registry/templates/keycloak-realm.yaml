@@ -27,7 +27,7 @@ spec:
         publicClient: true
         redirectUris:
           - '*'
-        standardFlowEnabled: false
+        standardFlowEnabled: true
         webOrigins:
           - '*'
     displayName: {{ .Release.Name }}-keycloak-realm
