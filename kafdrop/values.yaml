@@ -1,0 +1,111 @@
+---
+replicaCount: 1
+
+namespace: namespace
+
+image:
+  repository: obsidiandynamics/kafdrop
+  tag: latest
+  pullPolicy: Always
+
+auth:
+  # set to false in order to disable the authentication proxy side car
+  enabled: true
+  # select the target address where to be redirected after authentication must contain protocol name (http/https) in case its not a domain name it ust include port number
+  upstream: "http://kafdrop:9000"
+  # set as true if you need to use email domain authentication
+  useEmailDomain: false
+  # select the mail domain to be allowed for authentication
+  emailDomain: redhat.com
+  # set true if you need to use role based authentication
+  useSar: true
+  # select the resource where access is needed for a user to it in order to be able to bypass the proxy
+  #  "namespace":"app-dev","resource":"services","name":"proxy","verb":"get"}
+  resource:
+    namespace: "kafka-essence-demo"
+    kind: "services"
+    name: kafdrop
+    verb: get
+  # select cookie secret name must be 16 bytes or 24 or 32
+  cookieSecretName: KAFDROP234567890123456
+  # cookie saving refresh rate in seconds
+  cookieRefreshSec: 0
+  # number of replicas for the deployment
+  replicas: 1
+  # list of labels to add to all resources e.g:
+  # labels:
+  #   - 'someLabelName: someLabelValue'
+  #   - 'someOtherLabelName: someOtherLabelValue'
+  labels:
+    - "app: kafkdrop"
+    - "chart: kafdrop"
+
+kafka:
+  brokerConnect: essence-kafka-demo-kafka-external-bootstrap-kafka-essence-demo.apps.o7pr5dba.westeurope.aroapp.io:443
+  kafkaProperties: |
+    schema.registry.url=http://rh-service-registry-rh-service-registry-service:8080/apis/ccompat/v6
+    ssl.truststore.location=/etc/kafka/truststore/ca.p12
+    ssl.truststore.password=ocV8h5hgt1fM
+    ssl.truststore.type=PKCS12
+    ssl.keystore.location=/etc/kafka/keystore/user.p12
+    ssl.keystore.password=foRpjPFPlR66
+    ssl.keystore.type=PKCS12
+    ssl.key.password=foRpjPFPlR66
+    security.protocol=SSL
+  keystoreFileLocation: /etc/kafka/keystore
+  keystoreItem: user.p12
+  keystoreSecret: schema-registry-user-rh-service-registry
+  propertiesFileLocation: /etc/kafka
+  truststoreFileLocation: /etc/kafka/truststore
+  truststoreItem: ca.p12
+  truststoreSecret: essence-kafka-demo-cluster-ca-cert
+
+host:
+
+jvm:
+  opts: "-Xms32M -Xmx64M"
+jmx:
+  port: 8686
+
+nameOverride: ""
+fullnameOverride: ""
+
+cmdArgs: "--message.format=AVRO --schemaregistry.connect=http://rh-service-registry-rh-service-registry-service:8080/apis/ccompat/v6"
+
+server:
+  port: 9000
+  servlet:
+    contextPath: /
+
+service:
+  annotations: {}
+  type: ClusterIP
+  port: 9000
+  targetPort: 9000
+
+ingress:
+  enabled: false
+  annotations: {}
+  path: /
+  hosts: []
+  tls: []
+
+resources:
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  requests:
+    cpu: 1m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
+
+mountProtoDesc:
+  enabled: false
+  hostPath:
