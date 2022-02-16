@@ -45,12 +45,9 @@ kafka:
   kafkaProperties: |
     schema.registry.url=http://rh-service-registry-rh-service-registry-service:8080/apis/ccompat/v6
     ssl.truststore.location=/etc/kafka/truststore/ca.p12
-    ssl.truststore.password=ocV8h5hgt1fM
     ssl.truststore.type=PKCS12
     ssl.keystore.location=/etc/kafka/keystore/user.p12
-    ssl.keystore.password=foRpjPFPlR66
     ssl.keystore.type=PKCS12
-    ssl.key.password=foRpjPFPlR66
     security.protocol=SSL
   keystoreFileLocation: /etc/kafka/keystore
   keystoreItem: user.p12
