@@ -7,7 +7,7 @@
     "service",
     "naming",
     "topics",
-    "encoded"
+    "schemas"
   ],
   "properties": {
     "kafka": {
@@ -97,33 +97,19 @@
       }
     },
     "topics": {
-      "anyOf": [
-        {
-          "type": "string",
-          "description": "A Topic for pushing the messages with"
-        },
-        {
-          "type": "array",
-          "description": "A list of topics for pushing the messages with",
-          "items": {
-            "type": "string"
-          }
-        }
-      ]
+      "type": "array",
+      "description": "A list of topics for pushing the messages with",
+      "items": {
+        "type": "string"
+      }
     },
-    "encoded": {
-      "type": "object",
-      "description": "Base64 encoding info",
-      "required": [
-        "archive"
-      ],
-      "properties": {
-        "archive": {
-          "type": "string",
-          "description": "A base64 representation a the tar.gz archive containing the schema files",
-          "contentEncoding": "base64",
-          "contentMediaType": "application/gzip"
-        }
+    "schemas": {
+      "type": "array",
+      "description": "A list of base64 representations of schemas",
+      "items": {
+        "type": "string",
+        "contentEncoding": "base64",
+        "contentMediaType": "application/gzip"
       }
     },
     "labels": {

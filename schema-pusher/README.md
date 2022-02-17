@@ -16,8 +16,7 @@ And if you're in for the *full* [OpenShift][12] experience,</br>
 got your underlying *Kafka* deployment covered with [AMQ Streams][14].
 
 This *Helm Chart* helps you easily migrate your various data structures, schemas to [Red Hat's Service Registry][10].</br>
-Simply create a *tar.gz* archive with all of your schema files (subfolders are ok),</br>
-install this *Chart*, and get back to work.</br>
+Simply install this *Chart* specifying a list of topics and schemas, and get back to work.</br>
 :grin:
 
 ## Installation
@@ -28,18 +27,20 @@ Adding the repo:
 helm repo add fsi-common-helm https://rhecosystemappeng.github.io/fsi-common-helm/
 ```
 
-Installing the chart:
+Applying the chart:
 
 ```shell
-helm install fsi-common-helm/schema-pusher --generate-name \
+helm upgrade fsi-common-helm/schema-pusher --generate-name \
 --set kafka.bootstrap=https://<kafka-bootstrap-url-goes-here>:443 \
 --set kafka.certificates.server.secret=kafka-cluster-ca-cert \
 --set kafka.certificates.user.secret=kafka-user-cert \
 --set service.registry=http://<service-registry-goes-here> \
---set topics[0]=sometopic1 --set topics[1]=anothertopic \
 --set naming.strategy=topic_record \
---set encoded.archive=$(base64 -w 0 schemas_files.tar.gz)
+--set topics[0]=sometopic --set schemas[0]=$(base64 -w 0 my_schema.avsc) \
+--set topics[1]=someothertopic --set schemas[1]=$(base64 -w 0 my_other_schema.avsc)
 ```
+
+> Note the correlation between the *topics* and *schemas*.
 
 ## Chart operation
 
@@ -49,15 +50,6 @@ This *Helm Chart* creates two resources for pushing schema files to [Red Hat's S
 - A [Pod](templates/pod.yaml) for publishing the schemas using the [schema-pusher][15] image.
 
 Both resources named after the release suffixed with a *-configmap* and *-pod* respectively.
-
-The *ConfigMap* stores the configuration for the execution,</br>
-as well as a base64 encoded value representing the *tar.gz* archive containing schema files.</br>
-The *Pod* decodes the encoded value, extracts the *tar.gz* archive,</br>
-and produces the schema files recursively as messages per topic specified.
-
-## Prerequisites
-
-- A *tar.gz* archive containing the desired schema files for pushing.
 
 ## Configuration Values
 
@@ -71,15 +63,14 @@ Update [values.yaml](values.yaml) or use *helm* to set the following configurati
 | `service.registry`                 | redhat's service registry service url                                  | Y        | `http://<service-registry-url-goes-here>`     |
 | `naming.strategy`                  | subject naming strategy (topic, record, topic_record)                  | Y        | `topic_record`                                |
 | `topics`                           | a list of one or more topics to produce the message to                 | Y        | `[sometopic]`                                 |
-| `encoded.archive`                  | a base64 encoded value for a tar.gz archive containg schema files      | Y        | `$(base64 -w 0 schema_files.tar.gz)`          |
+| `schemas`                          | a base64 encoded value for schema files                                | Y        | `[$(base64 -w 0 /path/to/my_schema.json)]`    |
 | `labels`                           | optional key-value pairs used as labels for the resources              | N        | `labelKey: labelValue`                        |
 
-> Note, when producing messages to multiple topics, only the *topic_record* strategy is allowed.
+> Please keep the *topics* and *schemas* correlated.
 
-## Supported schema types
+## Schema types
 
-At the time of writing this, this application supports [Apache AVRO][16].</>
-Supported file types are `JSON`, `AVSC`, `AVRO`, other types won't get picked up by the application.
+Currently, we support [AVRO Schemas][16].
 
 ## Useful links
 

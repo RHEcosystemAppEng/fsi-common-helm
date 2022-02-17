@@ -30,14 +30,15 @@ spec:
     args:
       - >
         topic_args=""
-        && IFS=',' read -ra topics <<< $(cat /config/topics)
-        && for topic in "${topics[@]}"; do topic_args+=" --topic $topic"; done
+        && schema_args=""
+        && for((t=0; ;++t)); do if test -f "/config/topic$t"; then topic_args+=" --topic $(cat /config/topic$t)"; else break; fi; done
+        && for((s=0; ;++s)); do if test -f "/config/schema$s"; then schema_args+=" --schema $(cat /config/schema$s | base64 -w 0 -)"; else break; fi; done
         && /app/entrypoint.sh
         --bootstrap $(cat /config/kafka.bootstrap)
         --registry $(cat /config/service.registry)
         --strategy $(cat /config/naming.strategy)
         $topic_args
-        --content $(cat /config/encoded.archive | base64 -w 0 -)
+        $schema_args
       {{- if .Values.kafka.certificates }}
       {{- if .Values.kafka.certificates.server }}
         --truststore $(cat /config/kafka.certificates.server/ca.p12 | base64 -w 0 -)
