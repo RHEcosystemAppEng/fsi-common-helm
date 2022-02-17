@@ -20,18 +20,24 @@ naming:
   # this can be topic/record/topic_record, but for multiple topics, only topic_record is allowed
   strategy: topic_record
 
-# a minimum of 1 topic is required
-topics:
-  - sometopic1
-  - sometopictoo
-  - somemoretopic
-
-encoded:
-  # this is an example of a real tar.gz archive containing multiple files while only 3 of them are valid schemas (.{json,avsc,avro})
-  archive: |
-    H4sIAAAAAAAAA+2Y24rbMBCGfZ2nML4OtnwU9AEKvWgpdKEXpQTHVjZebCtI8pay5N0ryTmVdSo1GC1L5rsxlkce0D//jBPOqkgQLiJGOB1YRXhU0U7e1dtSRLzakq6MdgPfEhaVz4welnjk2YMkGOfqGuMcXV6PeHEWF2mK4jxJPZSkOMaen/9HjpsZuCiZ73uCdoRtmqtxpufvFH6r/mrTarwJy2de/SOHErgosqv6p3Ex6p8UUvpY6o8RzjwfuTiAO9f/ZeH7QV92hO/KigQf/EDKH47yhwd5R/lDJf9hiQdLtU/83uktjFSU1eOaepdae5D10fSP33T8+GjTkLbm8uEPead4OUXr6/L8Ri6Y3Bzsl68im/oyrqbDuiXBXob9XOwXb32a74+b/c+H9Ya2tVw25rDu/7r9y7gkx6iA/u+CGfS/mAQrQWn4xGn/Vw5T/8/ksD/1/zzx5EDABfR/J7jp/w+UGkdA2VMh03yxngSHDZ8mB8JEeF2T+qPKP/X6ex0gc3z/rTrKiC6P6Rxm/ydn/8tvQSQHgfwMBP87wI3/P8sCMTYAVUX27lfRttZXsa+cv6a0JWV/v9bXzOJ/daQt4fxKDuPvv6w4/f7PMqT8j3AC/neBo/l/KBBjDzhWkn0fOO6Y7gV37W0bZvH/L0b7x1Cd/WQOs//jC//nyv9pWoD/XeDG/99VgagmYGwAupTs3a/Dwfq3M4v/d7TpRXg1h9H/aX7+/1/5P8GZXAL/O8CN/7+qAjF6X5eRvfd1OHgfAAAAAAAAAADAjj85mSqvACgAAA==
-
 # labels (key: value) are implemented with both the configmap and the pod
-# this is optional and will be added on top of hard-coded labels, you can omit this key
+# this is optional and will be added on top of hard-coded labels
 # labels:
 #   description: application_for_pushing_schemas_to_red_hat_service_registry
+
+##############################################
+# topics and schemas list must be correlated #
+##############################################
+
+# a minimum of 1 topic is required
+topics:
+  - sometopic
+  - someothertopic
+
+# a minimum of 1 schema is required
+# the example values here are real schemas used for testing
+schemas:
+  # - ewogICJuYW1lc3BhY2UiOiAiY29tLnJlZGhhdC5zY2hlbWEucHVzaGVyLmF2cm8uc2NoZW1hcyIsCiAgInR5cGUiOiAicmVjb3JkIiwKICAibmFtZSI6ICJUZXN0aW5nU2NoZW1hMU5hbWUiLAogICJmaWVsZHMiOiBbCiAgICAgIHsibmFtZSI6ICJuYW1lIiwgInR5cGUiOiAic3RyaW5nIn0sCiAgICAgIHsibmFtZSI6ICJpZCIsICJ0eXBlIjogImRvdWJsZSJ9CiAgXQp9Cg==
+  # - ewogICJuYW1lc3BhY2UiOiAiY29tLnJlZGhhdC5zY2hlbWEucHVzaGVyLmF2cm8uc2NoZW1hcyIsCiAgInR5cGUiOiAicmVjb3JkIiwKICAibmFtZSI6ICJUZXN0aW5nU2NoZW1hMk5hbWUiLAogICJmaWVsZHMiOiBbCiAgICAgIHsibmFtZSI6ICJtb3JlTmFtZSIsICJ0eXBlIjogInN0cmluZyJ9LAogICAgICB7Im5hbWUiOiAibW9yZUlkIiwgInR5cGUiOiAiZG91YmxlIn0sCiAgICAgIHsibmFtZSI6ICJtb3JlRmllbGQiLCAidHlwZSI6ICJib29sZWFuIn0KICBdCn0K
+  - first
+  - second

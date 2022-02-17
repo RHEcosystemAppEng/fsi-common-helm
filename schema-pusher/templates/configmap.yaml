@@ -9,7 +9,11 @@ data:
   kafka.bootstrap: {{ .Values.kafka.bootstrap }}
   service.registry: {{ .Values.service.registry }}
   naming.strategy: {{ .Values.naming.strategy }}
-  topics: {{ join "," .Values.topics }}
+{{- range $i, $t := .Values.topics }}
+  topic{{$i}}: {{$t}}
+{{- end }}
 binaryData:
-  encoded.archive: {{ .Values.encoded.archive }}
+{{- range $i, $s := .Values.schemas }}
+  schema{{$i}}: {{$s}}
+{{- end }}
 immutable: true
