@@ -27,20 +27,28 @@ Adding the repo:
 helm repo add fsi-common-helm https://rhecosystemappeng.github.io/fsi-common-helm/
 ```
 
-Applying the chart:
+Installing the chart:
 
 ```shell
-helm upgrade fsi-common-helm/schema-pusher --generate-name \
+helm install fsi-common-helm/schema-pusher --generate-name \
 --set kafka.bootstrap=https://<kafka-bootstrap-url-goes-here>:443 \
 --set kafka.certificates.server.secret=kafka-cluster-ca-cert \
 --set kafka.certificates.user.secret=kafka-user-cert \
 --set service.registry=http://<service-registry-goes-here> \
 --set naming.strategy=topic_record \
---set topics[0]=sometopic --set schemas[0]=$(base64 -w 0 my_schema.avsc) \
---set topics[1]=someothertopic --set schemas[1]=$(base64 -w 0 my_other_schema.avsc)
+--set kafka.properties[0].key=basic.auth.credentials.source \
+--set kafka.properties[0].value=USER_INFO \
+--set kafka.properties[1].key=schema.registry.basic.auth.user.info \
+--set kafka.properties[1].value=registry-user:changeme \
+--set messages[0].topic=sometopic \
+--set messages[0].schema=$(base64 -w 0 my_schema.avsc) \
+--set messages[1].topic=someothertopic \
+--set messages[1].schema=$(base64 -w 0 my_other_schema.avsc)
 ```
 
-> Note the correlation between the *topics* and *schemas*.
+> Note that the use of properties is optional.</br>
+> Also note that some property keys are reserved for the application and cannot be overwritten,</br>
+> please check the [Producer property keys](#producer-property-keys) section.
 
 ## Chart operation
 
@@ -58,15 +66,30 @@ Update [values.yaml](values.yaml) or use *helm* to set the following configurati
 | Parameter                          | Description                                                            | Required | Example                                       |
 | ---------------------------------- | ---------------------------------------------------------------------- | :------: | --------------------------------------------- |
 | `kafka.bootstrap`                  | kafka's bootstrap service url                                          | Y        | `https://<kafka-bootstrap-url-goes-here>:443` |
+| `kafka.properties`                 | key-value properties for the kafka producer                            | N        | `{"key": "custom_key", "value": "custom_value"}` |
 | `kafka.certificates.server.secret` | secret name containing the *ca.p12* and *ca.password* data entries     | N        | `my-kafka-cluster-cluster-ca-cert`            |
 | `kafka.certificates.user.secret`   | secret name containing the *user.p12* and *user.password* data entries | N        | `my-kafka-cluster-user-cert`                  |
 | `service.registry`                 | redhat's service registry service url                                  | Y        | `http://<service-registry-url-goes-here>`     |
 | `naming.strategy`                  | subject naming strategy (topic, record, topic_record)                  | Y        | `topic_record`                                |
-| `topics`                           | a list of one or more topics to produce the message to                 | Y        | `[sometopic]`                                 |
-| `schemas`                          | a base64 encoded value for schema files                                | Y        | `[$(base64 -w 0 /path/to/my_schema.json)]`    |
+| `messages`                         | array of one or more message info object for producing messages        | Y        | `{"topic": "sometopic", "schema": $(base64 -w 0 my_schema.json)}` |
 | `labels`                           | optional key-value pairs used as labels for the resources              | N        | `labelKey: labelValue`                        |
 
-> Please keep the *topics* and *schemas* correlated.
+## Producer property keys
+
+The following *producer property keys* cannot be overwritten using the *--propkey* and *--propvalue* parameters:
+
+- *bootstrap.servers*
+- *schema.registry.url*
+- *key.serializer*
+- *value.serializer*
+- *value.subject.name.strategy*
+- *security.protocol*
+- *ssl.truststore.location*
+- *ssl.truststore.password*
+- *ssl.truststore.type*
+- *ssl.keystore.location*
+- *ssl.keystore.password*
+- *ssl.keystore.type*
 
 ## Schema types
 

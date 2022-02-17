@@ -29,16 +29,16 @@ spec:
     command: [ "/bin/bash", "-c", "--" ]
     args:
       - >
-        topic_args=""
-        && schema_args=""
-        && for((t=0; ;++t)); do if test -f "/config/topic$t"; then topic_args+=" --topic $(cat /config/topic$t)"; else break; fi; done
-        && for((s=0; ;++s)); do if test -f "/config/schema$s"; then schema_args+=" --schema $(cat /config/schema$s | base64 -w 0 -)"; else break; fi; done
+        properties_args=""
+        && messages_args=""
+        && for m in "/config"/topic_*; do messages_args+=" --topic $(basename $m | sed 's/topic_//') --schema $(cat $m | base64 -w 0 -)"; done
+        && for p in "/config"/property_*; do properties_args+=" --propkey $(basename $p | sed 's/property_//') --propvalue \"$(cat $p)\""; done
         && /app/entrypoint.sh
         --bootstrap $(cat /config/kafka.bootstrap)
         --registry $(cat /config/service.registry)
         --strategy $(cat /config/naming.strategy)
-        $topic_args
-        $schema_args
+        $properties_args
+        $messages_args
       {{- if .Values.kafka.certificates }}
       {{- if .Values.kafka.certificates.server }}
         --truststore $(cat /config/kafka.certificates.server/ca.p12 | base64 -w 0 -)

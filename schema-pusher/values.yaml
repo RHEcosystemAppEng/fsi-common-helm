@@ -2,6 +2,14 @@
 kafka:
   # replace <kafka-bootstrap-url-goes-here> with the kafka bootstrap route
   bootstrap: https://<kafka-bootstrap-url-goes-here>:443
+  # configure the kafka producer used to produce the messages
+  # optional custom producer properties
+  # check the documentation for specific keys saved for the application
+  properties:
+  - key: basic.auth.credentials.source
+    value: USER_INFO
+  - key: schema.registry.basic.auth.user.info
+    value: registry-user:changeme
   # optionally specify a secrets containing a p12 and a password data entries to use with the kafka producer
   # a server secret containing a ca.p12 and ca.password data entries to be used as a truststore
   # a user secret containing a user.p12 and user.password data entries to be used as a keystore
@@ -20,22 +28,16 @@ naming:
   # this can be topic/record/topic_record, but for multiple topics, only topic_record is allowed
   strategy: topic_record
 
+# detail for producing messages to kafka
+# the example schema values here are real schemas used for testing
+messages:
+  - topic: sometopic
+    schema: ewogICJuYW1lc3BhY2UiOiAiY29tLnJlZGhhdC5zY2hlbWEucHVzaGVyLmF2cm8uc2NoZW1hcyIsCiAgInR5cGUiOiAicmVjb3JkIiwKICAibmFtZSI6ICJUZXN0aW5nU2NoZW1hMU5hbWUiLAogICJmaWVsZHMiOiBbCiAgICAgIHsibmFtZSI6ICJuYW1lIiwgInR5cGUiOiAic3RyaW5nIn0sCiAgICAgIHsibmFtZSI6ICJpZCIsICJ0eXBlIjogImRvdWJsZSJ9CiAgXQp9Cg
+    dchema: ewogICJuYW1lc3BhY2UiOiAiY29tLnJlZGhhdC5zY2hlbWEucHVzaGVyLmF2cm8uc2NoZW1hcyIsCiAgInR5cGUiOiAicmVjb3JkIiwKICAibmFtZSI6ICJUZXN0aW5nU2NoZW1hMU5hbWUiLAogICJmaWVsZHMiOiBbCiAgICAgIHsibmFtZSI6ICJuYW1lIiwgInR5cGUiOiAic3RyaW5nIn0sCiAgICAgIHsibmFtZSI6ICJpZCIsICJ0eXBlIjogImRvdWJsZSJ9CiAgXQp9Cg
+  - topic: someothertopic
+    schema: ewogICJuYW1lc3BhY2UiOiAiY29tLnJlZGhhdC5zY2hlbWEucHVzaGVyLmF2cm8uc2NoZW1hcyIsCiAgInR5cGUiOiAicmVjb3JkIiwKICAibmFtZSI6ICJUZXN0aW5nU2NoZW1hMk5hbWUiLAogICJmaWVsZHMiOiBbCiAgICAgIHsibmFtZSI6ICJtb3JlTmFtZSIsICJ0eXBlIjogInN0cmluZyJ9LAogICAgICB7Im5hbWUiOiAibW9yZUlkIiwgInR5cGUiOiAiZG91YmxlIn0sCiAgICAgIHsibmFtZSI6ICJtb3JlRmllbGQiLCAidHlwZSI6ICJib29sZWFuIn0KICBdCn0K
+
 # labels (key: value) are implemented with both the configmap and the pod
 # this is optional and will be added on top of hard-coded labels
 # labels:
 #   description: application_for_pushing_schemas_to_red_hat_service_registry
-
-##############################################
-# topics and schemas list must be correlated #
-##############################################
-
-# a minimum of 1 topic is required
-topics:
-  - sometopic
-  - someothertopic
-
-# a minimum of 1 schema is required
-# the example values here are real schemas used for testing
-schemas:
-  - ewogICJuYW1lc3BhY2UiOiAiY29tLnJlZGhhdC5zY2hlbWEucHVzaGVyLmF2cm8uc2NoZW1hcyIsCiAgInR5cGUiOiAicmVjb3JkIiwKICAibmFtZSI6ICJUZXN0aW5nU2NoZW1hMU5hbWUiLAogICJmaWVsZHMiOiBbCiAgICAgIHsibmFtZSI6ICJuYW1lIiwgInR5cGUiOiAic3RyaW5nIn0sCiAgICAgIHsibmFtZSI6ICJpZCIsICJ0eXBlIjogImRvdWJsZSJ9CiAgXQp9Cg==
-  - ewogICJuYW1lc3BhY2UiOiAiY29tLnJlZGhhdC5zY2hlbWEucHVzaGVyLmF2cm8uc2NoZW1hcyIsCiAgInR5cGUiOiAicmVjb3JkIiwKICAibmFtZSI6ICJUZXN0aW5nU2NoZW1hMk5hbWUiLAogICJmaWVsZHMiOiBbCiAgICAgIHsibmFtZSI6ICJtb3JlTmFtZSIsICJ0eXBlIjogInN0cmluZyJ9LAogICAgICB7Im5hbWUiOiAibW9yZUlkIiwgInR5cGUiOiAiZG91YmxlIn0sCiAgICAgIHsibmFtZSI6ICJtb3JlRmllbGQiLCAidHlwZSI6ICJib29sZWFuIn0KICBdCn0K

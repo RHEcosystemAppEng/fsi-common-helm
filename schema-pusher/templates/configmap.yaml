@@ -1,6 +1,7 @@
 ---
 apiVersion: v1
 kind: ConfigMap
+immutable: true
 metadata:
   name: {{ .Release.Name }}-configmap
   labels:
@@ -9,11 +10,12 @@ data:
   kafka.bootstrap: {{ .Values.kafka.bootstrap }}
   service.registry: {{ .Values.service.registry }}
   naming.strategy: {{ .Values.naming.strategy }}
-{{- range $i, $t := .Values.topics }}
-  topic{{$i}}: {{$t}}
+{{- if .Values.kafka.properties }}
+{{- range .Values.kafka.properties }}
+  property_{{ .key }}: {{ .value | quote }}
+{{- end }}
 {{- end }}
 binaryData:
-{{- range $i, $s := .Values.schemas }}
-  schema{{$i}}: {{$s}}
+{{- range .Values.messages }}
+  topic_{{ .topic }}: {{ .schema }}
 {{- end }}
-immutable: true
