@@ -57,7 +57,7 @@ Update [values.yaml](values.yaml) or use *helm* to set the following configurati
 ```shell
 helm install fsi-common-helm/kafdrop $RELEASE_NAME
 ```
-**NOTE: ** in order to set values without modifiyng the [values][31] file, you can use the following example for each parmeter you need to change
+**NOTE:** in order to set values without modifiyng the [values][31] file, you can use the following example for each parmeter you need to change
 ```shell
 helm install fsi-common-helm/kafdrop $RELEASE_NAME --set kafka.truststoreSecret=my_truststore_secret
 ```
