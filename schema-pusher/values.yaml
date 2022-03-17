@@ -25,7 +25,7 @@ service:
   registry: http://<service-registry-goes-here>
 
 naming:
-  # this can be topic/record/topic_record, but for multiple topics, only topic_record is allowed
+  # this can be topic/record/topic_record
   strategy: topic_record
 
 # detail for producing messages to kafka
