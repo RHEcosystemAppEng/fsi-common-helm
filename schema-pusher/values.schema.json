@@ -34,7 +34,7 @@
               },
               "value": {
                 "type": ["string", "boolean", "integer"],
-                "description": "Custom producedr property value"
+                "description": "Custom producer property value"
               }
             }
           }
@@ -124,9 +124,9 @@
             "type": "string",
             "description": "Topic to store the message in,"
           },
-          "value": {
+          "schema": {
             "type": "string",
-            "description": "Base64 reprenstation of the schema for the message",
+            "description": "Base64 representation of the schema for the message",
             "contentEncoding": "base64",
             "contentMediaType": "application/gzip"
           }
@@ -150,7 +150,7 @@
           },
           "value": {
             "type": "string",
-            "description": "Custom producedr property value"
+            "description": "Custom producer property value"
           }
         }
       }
