@@ -2,8 +2,22 @@ apiVersion: v1
 entries:
   schema-pusher:
   - apiVersion: v2
+    appVersion: 1.1.1
+    created: "2022-07-14T11:55:25.257259142Z"
+    description: A Helm chart for pushing schema files to Red Hat's Service Registry
+    digest: 0f674e2a7d64e8c5646ffad28f0b90f6285f2f9739ee7c75ecfda0a5bf785ca3
+    icon: https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/red_hat_logo.png
+    keywords:
+    - schema-registry
+    - service-registry
+    name: schema-pusher
+    type: application
+    urls:
+    - https://RHEcosystemAppEng.github.io/fsi-common-helm/schema-pusher-2.1.1.tgz
+    version: 2.1.1
+  - apiVersion: v2
     appVersion: 1.1.0
-    created: "2022-02-17T22:36:32.919797439Z"
+    created: "2022-07-14T11:55:25.256760745Z"
     description: A Helm chart for pushing schema files to Red Hat's Service Registry
     digest: 5aa3afdbb4b40ed1c9d5335436e3b437dbd2a73954601163be70300350861748
     icon: https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/red_hat_logo.png
@@ -17,7 +31,7 @@ entries:
     version: 2.1.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2022-02-17T22:36:32.919025844Z"
+    created: "2022-07-14T11:55:25.256218949Z"
     description: A Helm chart for pushing schema files to Red Hat's Service Registry
     digest: a48619163391f676a6858033b467e4b19d78efaf9b7d6fe6973d71013fff9388
     icon: https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/red_hat_logo.png
@@ -31,7 +45,7 @@ entries:
     version: 2.0.0
   - apiVersion: v2
     appVersion: 0.3.0
-    created: "2022-02-17T22:36:32.918513648Z"
+    created: "2022-07-14T11:55:25.255774552Z"
     description: A Helm chart for pushing schema files to Red Hat's Service Registry
     digest: d9545a7db71a7a1ff6b8854d29fe59a5a7ddfb695025be05bc0c119fc00b4c1e
     icon: https://raw.githubusercontent.com/RHEcosystemAppEng/fsi-common-helm/main/schema-pusher/images/red_hat_logo.png
@@ -43,4 +57,4 @@ entries:
     urls:
     - https://RHEcosystemAppEng.github.io/fsi-common-helm/schema-pusher-1.2.0.tgz
     version: 1.2.0
-generated: "2022-02-17T22:36:32.917165857Z"
+generated: "2022-07-14T11:55:25.255122357Z"
